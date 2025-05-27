@@ -6,8 +6,11 @@ import { exec } from "node:child_process";
 import { existsSync } from "node:fs";
 import { promisify } from "node:util";
 import { resolve, normalize } from "node:path";
+import { createRequire } from "node:module";
 import { Config, CommandRequest, LogLevel } from "./interface/index.js";
-import packageJson from "./package.json" with { type: "json" };
+
+const require = createRequire(import.meta.url);
+const packageJson = require('./package.json');
 
 const execAsync = promisify(exec);
 
