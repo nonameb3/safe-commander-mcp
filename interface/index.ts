@@ -12,4 +12,4 @@ export interface Config {
   ALLOWED_PATH: string;
 }
 
-export type LogLevel = 'info' | 'warn' | 'error';
+export type LogLevel = 'info' | 'warn' | 'error' | 'debug';
