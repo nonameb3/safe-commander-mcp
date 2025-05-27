@@ -1,14 +1,50 @@
 {
   "name": "safe-commander-mcp",
   "version": "1.0.0",
+  "description": "A secure MCP server for executing whitelisted development commands with comprehensive security controls and resource limits",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "safe-commander-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "interface/**/*",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "security",
+    "command-execution",
+    "ai-tools",
+    "claude",
+    "development-tools",
+    "safe-execution",
+    "typescript"
+  ],
+  "homepage": "https://github.com/nonameb3/safe-commander-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nonameb3/safe-commander-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nonameb3/safe-commander-mcp/issues"
+  },
+  "author": "roonnapai <roonnapai.dev@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx index.ts",
-    "start:mcp": "yarn build && ALLOWED_PATH=/tmp npx @modelcontextprotocol/inspector node dist/index.js"
+    "start:mcp": "yarn build && ALLOWED_PATH=/tmp npx @modelcontextprotocol/inspector node dist/index.js",
+    "prepublishOnly": "yarn build",
+    "postinstall": "echo 'Safe Commander MCP installed successfully. See README.md for configuration instructions.'"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
