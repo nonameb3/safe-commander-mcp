@@ -25,6 +25,8 @@ const commandCooldowns = new Map<string, number>();
 const runningCommands = new Set<string>();
 
 // Logging function with levels and timestamps
+// IMPORTANT: Use log() function instead of console.log() because MCP servers use stdio transport
+// where stdout is reserved for JSON-RPC messages and stderr is for logging
 function log(level: LogLevel, message: string, extra?: any): void {
   const timestamp = new Date().toISOString();
   const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
@@ -295,16 +297,16 @@ function validateCriticalConfig(): void {
   const allowedPath = process.env.ALLOWED_PATH;
   
   if (!allowedPath) {
-    console.error('FATAL: ALLOWED_PATH environment variable must be set');
+    log('error', 'FATAL: ALLOWED_PATH environment variable must be set');
     process.exit(1);
   }
   
   if (!existsSync(allowedPath)) {
-    console.error(`FATAL: ALLOWED_PATH directory does not exist: ${allowedPath}`);
+    log('error', `FATAL: ALLOWED_PATH directory does not exist: ${allowedPath}`);
     process.exit(1);
   }
   
-  console.log(`✅ Configuration validated: ${allowedPath}`);
+  log('info', 'Configuration validated successfully', { allowedPath });
 }
 
 validateCriticalConfig();
