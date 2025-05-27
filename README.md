@@ -242,14 +242,6 @@ yarn dev
 - Ensure no `console.log()` usage (outputs to stdout)
 - All logging goes to stderr via the `log()` function
 
-### Debug Mode
-
-Enable debug logging by setting the log level:
-
-```typescript
-// In development, you can modify the log function to show debug messages
-```
-
 ## Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
