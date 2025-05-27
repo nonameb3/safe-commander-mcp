@@ -7,6 +7,7 @@ import { existsSync } from "node:fs";
 import { promisify } from "node:util";
 import { resolve, normalize } from "node:path";
 import { Config, CommandRequest, LogLevel } from "./interface/index.js";
+import packageJson from "./package.json" with { type: "json" };
 
 const execAsync = promisify(exec);
 
@@ -315,7 +316,7 @@ validateCriticalConfig();
 validateStartupConfiguration();
 
 // Create the MCP server
-const server = new Server({ name: "personal-dev-mcp", version: "1.0.0" }, { capabilities: { tools: {} } });
+const server = new Server({ name: packageJson.name, version: packageJson.version }, { capabilities: { tools: {} } });
 
 // Enhanced tool handler with comprehensive security and monitoring
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
@@ -429,8 +430,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 async function main(): Promise<void> {
   try {
     log('info', 'Starting MCP server...', {
-      name: "personal-dev-mcp",
-      version: "1.0.0",
+      name: packageJson.name,
+      version: packageJson.version,
       nodeVersion: process.version,
       platform: process.platform
     });
