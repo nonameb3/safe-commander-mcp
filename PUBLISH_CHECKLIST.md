@@ -15,11 +15,11 @@
   - [x] `README.md` (security section)
 
 ### 2. Test the Package
-- [ ] Run `yarn build` to ensure clean build
-- [ ] Test with valid configuration: `ALLOWED_PATH=/tmp ALLOWED_COMMANDS=ls,cat yarn dev`
-- [ ] Test with invalid configuration to ensure it fails properly
-- [ ] Test the binary: `node dist/index.js` with environment variables
-- [ ] Run `npm pack --dry-run` to verify package contents
+- [x] Run `yarn build` to ensure clean build
+- [x] Test with valid configuration: `ALLOWED_PATH=/tmp ALLOWED_COMMANDS=ls,cat yarn dev`
+- [x] Test with invalid configuration to ensure it fails properly
+- [x] Test the binary: `node dist/index.js` with environment variables
+- [x] Run `npm pack --dry-run` to verify package contents
 
 ### 3. GitHub Repository Setup
 - [x] Create repository on GitHub with the same name (`safe-commander-mcp`)
