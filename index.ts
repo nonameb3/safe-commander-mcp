@@ -3,13 +3,24 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { exec } from "node:child_process";
+import { existsSync } from "node:fs";
 import { promisify } from "node:util";
 
 const execAsync = promisify(exec);
 
-// Your allowed commands
-const ALLOWED_COMMANDS = ["npm", "git", "ls", "cat", "pwd", "node"];
-const ALLOWED_PATH = "/Users/roonnapai/Documents/personal-projects";
+// Allowed commands
+const ALLOWED_COMMANDS = process.env.ALLOWED_COMMANDS?.split(",") || ['npm', 'git', 'ls', 'cat', 'pwd', 'node'];
+const ALLOWED_PATH = process.env.ALLOWED_PATH;
+
+// Validate environment variables
+if (!ALLOWED_PATH) {
+  throw new Error("ALLOWED_PATH environment variable must be set");
+}
+
+// Validate path exists
+if (!existsSync(ALLOWED_PATH)) {
+  throw new Error(`ALLOWED_PATH directory does not exist: ${ALLOWED_PATH}`);
+}
 
 // Create the MCP server
 const server = new Server({ name: "personal-dev-mcp", version: "1.0.0" }, { capabilities: { tools: {} } });

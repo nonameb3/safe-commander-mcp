@@ -1,6 +1,7 @@
 {
   "name": "safe-commander-mcp",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
