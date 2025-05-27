@@ -9,7 +9,6 @@
   },
   "files": [
     "dist/**/*",
-    "interface/**/*",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
@@ -41,7 +40,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx index.ts",
+    "dev": "tsx src/index.ts",
     "start:mcp": "yarn build && ALLOWED_PATH=/tmp npx @modelcontextprotocol/inspector node dist/index.js",
     "prepublishOnly": "yarn build",
     "postinstall": "echo 'Safe Commander MCP installed successfully. See README.md for configuration instructions.'"
