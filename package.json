@@ -2,7 +2,6 @@
   "name": "safe-commander-mcp",
   "version": "1.0.1",
   "description": "A secure MCP server for executing whitelisted development commands with comprehensive security controls and resource limits",
-  "type": "module",
   "main": "dist/index.js",
   "bin": {
     "safe-commander-mcp": "dist/index.js"
@@ -39,10 +38,13 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:clean": "rm -rf dist && npm run build",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
-    "start:mcp": "yarn build && ALLOWED_PATH=/tmp npx @modelcontextprotocol/inspector node dist/index.js",
-    "prepublishOnly": "yarn build",
+    "dev:watch": "tsx watch src/index.ts",
+    "start:mcp": "npm run build && ALLOWED_PATH=/tmp npx @modelcontextprotocol/inspector node dist/index.js",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
     "postinstall": "echo 'Safe Commander MCP installed successfully. See README.md for configuration instructions.'"
   },
   "dependencies": {

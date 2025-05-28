@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import type { Config } from '../types/index.js';
-import { log } from '../utils/logger.js';
+import type { Config } from '../types/index';
+import { log } from '../utils/logger';
 
 // Configuration object with resource limits
 export const CONFIG: Config = {

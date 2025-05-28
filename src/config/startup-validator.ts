@@ -1,9 +1,9 @@
-import { validateCommand } from "../commands/command-validator.js";
-import { validatePath } from "../security/path-validator.js";
-import { sanitizeCommand } from "../security/sanitizer.js";
-import { validateCommandCategories } from "../commands/command-categorizer.js";
-import { CONFIG } from "./config-loader.js";
-import { log } from "../utils/logger.js";
+import { validateCommand } from "../commands/command-validator";
+import { validatePath } from "../security/path-validator";
+import { sanitizeCommand } from "../security/sanitizer";
+import { validateCommandCategories } from "../commands/command-categorizer";
+import { CONFIG } from "./config-loader";
+import { log } from "../utils/logger";
 
 /**
  * Comprehensive startup validation

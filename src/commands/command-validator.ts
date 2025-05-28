@@ -1,7 +1,7 @@
-import { sanitizeCommand } from '../security/sanitizer.js';
-import { validatePath } from '../security/path-validator.js';
-import { CONFIG } from '../config/config-loader.js';
-import { log } from '../utils/logger.js';
+import { sanitizeCommand } from '../security/sanitizer';
+import { validatePath } from '../security/path-validator';
+import { CONFIG } from '../config/config-loader';
+import { log } from '../utils/logger';
 
 /**
  * Enhanced command validation with length and security checks

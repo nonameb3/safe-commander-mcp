@@ -1,13 +1,12 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { createRequire } from "node:module";
-import { validateCriticalConfig, loadConfig } from '../config/config-loader.js';
-import { validateStartupConfiguration } from '../config/startup-validator.js';
-import { setupGracefulShutdown } from '../utils/shutdown-handler.js';
-import { setupRequestHandlers } from './request-handlers.js';
-import { log } from '../utils/logger.js';
+import { validateCriticalConfig, loadConfig } from '../config/config-loader';
+import { validateStartupConfiguration } from '../config/startup-validator';
+import { setupGracefulShutdown } from '../utils/shutdown-handler';
+import { setupRequestHandlers } from './request-handlers';
+import { log } from '../utils/logger';
 
-const require = createRequire(import.meta.url);
+// Direct require for package.json in CommonJS
 const packageJson = require('../../package.json');
 
 /**

@@ -1,10 +1,10 @@
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import type { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import type { CommandRequest } from '../types/index.js';
-import { executeCommand } from '../commands/command-executor.js';
-import { categorizeCommands, getCommandDescriptions, getCommandSummary, validateCommandCategories } from '../commands/command-categorizer.js';
-import { CONFIG } from '../config/config-loader.js';
-import { log } from '../utils/logger.js';
+import type { CommandRequest } from '../types/index';
+import { executeCommand } from '../commands/command-executor';
+import { categorizeCommands, getCommandDescriptions, getCommandSummary, validateCommandCategories } from '../commands/command-categorizer';
+import { CONFIG } from '../config/config-loader';
+import { log } from '../utils/logger';
 
 /**
  * Setup MCP tool request handlers

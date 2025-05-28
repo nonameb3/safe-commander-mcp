@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { startMCPServer } from './server/mcp-server.js';
+import { startMCPServer } from './server/mcp-server';
 
 /**
  * Main entry point for the Safe Commander MCP server

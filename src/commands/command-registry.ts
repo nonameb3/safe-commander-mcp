@@ -1,4 +1,4 @@
-import { CONFIG } from '../config/config-loader.js';
+import { CONFIG } from '../config/config-loader';
 
 /**
  * Command categories for better organization and discovery
@@ -29,7 +29,7 @@ export function getAllowedCommands(): string[] {
  */
 export function getCommandsByCategory(category: keyof typeof COMMAND_CATEGORIES): string[] {
   const categoryCommands = COMMAND_CATEGORIES[category];
-  return categoryCommands.filter(cmd => CONFIG.ALLOWED_COMMANDS.includes(cmd));
+  return (categoryCommands as readonly string[]).filter((cmd: string) => CONFIG.ALLOWED_COMMANDS.includes(cmd));
 }
 
 /**

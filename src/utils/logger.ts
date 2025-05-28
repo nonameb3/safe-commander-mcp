@@ -1,4 +1,4 @@
-import type { LogLevel } from '../types/index.js';
+import type { LogLevel } from '../types/index';
 
 /**
  * Logging function with levels and timestamps

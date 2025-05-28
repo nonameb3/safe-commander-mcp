@@ -1,10 +1,10 @@
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
-import type { CommandRequest, CommandResult } from '../types/index.js';
-import { validateCommand } from './command-validator.js';
-import { checkRateLimit, trackCommandStart, trackCommandEnd } from '../security/rate-limiter.js';
-import { CONFIG } from '../config/config-loader.js';
-import { log } from '../utils/logger.js';
+import type { CommandRequest, CommandResult } from '../types/index';
+import { validateCommand } from './command-validator';
+import { checkRateLimit, trackCommandStart, trackCommandEnd } from '../security/rate-limiter';
+import { CONFIG } from '../config/config-loader';
+import { log } from '../utils/logger';
 
 const execAsync = promisify(exec);
 

@@ -1,5 +1,5 @@
-import { getRunningCommands } from '../security/rate-limiter.js';
-import { log } from './logger.js';
+import { getRunningCommands } from '../security/rate-limiter';
+import { log } from './logger';
 
 /**
  * Graceful shutdown with proper cleanup
