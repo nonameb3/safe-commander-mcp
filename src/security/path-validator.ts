@@ -9,8 +9,9 @@ import { resolve, normalize } from "node:path";
  * @throws Error if path traversal is detected or path is invalid
  */
 export function validatePath(inputPath: string, allowedBasePath: string): string {
-  if (!inputPath || typeof inputPath !== 'string') {
-    throw new Error('Path must be a non-empty string');
+  if (!inputPath || typeof inputPath !== 'string' || inputPath.trim() === '') {
+    // Allow empty paths to default to current directory within allowed path
+    inputPath = '.';
   }
 
   try {
@@ -19,8 +20,13 @@ export function validatePath(inputPath: string, allowedBasePath: string): string
     const resolvedAllowed = resolve(allowedBasePath);
     const resolvedInput = resolve(resolvedAllowed, normalizedInput);
     
+    // Ensure the allowed path ends with a separator for proper comparison
+    const allowedWithSeparator = resolvedAllowed + (resolvedAllowed.endsWith('/') ? '' : '/');
+    const inputWithSeparator = resolvedInput + (resolvedInput.endsWith('/') ? '' : '/');
+    
     // Check if the resolved path is within the allowed directory
-    if (!resolvedInput.startsWith(resolvedAllowed)) {
+    // Must either be exactly the allowed path or start with allowedPath + separator
+    if (resolvedInput !== resolvedAllowed && !inputWithSeparator.startsWith(allowedWithSeparator)) {
       throw new Error('Path traversal attempt detected - path must be within allowed directory');
     }
     

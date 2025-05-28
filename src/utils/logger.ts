@@ -6,6 +6,11 @@ import type { LogLevel } from '../types/index';
  * where stdout is reserved for JSON-RPC messages and stderr is for logging
  */
 export function log(level: LogLevel, message: string, extra?: any): void {
+  // Suppress logging during tests to reduce noise
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
+  
   const timestamp = new Date().toISOString();
   const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
   
