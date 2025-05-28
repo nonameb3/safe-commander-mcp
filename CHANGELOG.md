@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-01-17
+
+### Added
+- **NEW TOOL: `list_available_commands`** - Revolutionary command discovery system
+  - Intelligent command categorization by type (package management, version control, file operations, etc.)
+  - Comprehensive command descriptions with detailed explanations
+  - Real-time configuration reporting (working directory, limits, timeouts)
+  - Category-based command summary and statistics
+  - Enhanced MCP tool enumeration with command validation
+
+### Enhanced
+- **Proactive Command Assistance**: Transform from "trial and error" command discovery to intelligent assistance
+  - Claude can now query available commands without guessing
+  - Workflow suggestions based on available command categories
+  - Better user experience with organized command presentation
+  - Security-first error messages that don't leak configuration information
+
+### Developer Experience  
+- Enhanced MCP tool schema with command enumeration for better Claude integration
+- Improved command validation with detailed categorization feedback
+- Comprehensive command registry with descriptions and safety classifications
+- Better debugging capabilities with command validation reporting
+
+### Security
+- Secure command enumeration without configuration information leakage
+- Enhanced error messages that maintain security while providing helpful guidance
+- Command validation improvements with category-based safety checks
+
 ## [1.0.1] - 2025-05-27
 
 ### Fixed
