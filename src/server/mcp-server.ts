@@ -6,8 +6,8 @@ import { setupGracefulShutdown } from '../utils/shutdown-handler';
 import { setupRequestHandlers } from './request-handlers';
 import { log } from '../utils/logger';
 
-// Direct require for package.json in CommonJS
-const packageJson = require('../../package.json');
+// Direct require for package.json in CommonJS - fix path for compiled output
+const packageJson = require('../../../package.json');
 
 /**
  * Start the MCP server with full initialization
