@@ -4,9 +4,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue.svg)](https://www.typescriptlang.org/)
 
-A secure MCP (Model Context Protocol) server for executing whitelisted development commands with comprehensive security controls and resource limits. Perfect for AI assistants that need safe command execution capabilities.
+A secure MCP (Model Context Protocol) server for executing whitelisted development commands with comprehensive security controls and resource limits. Features revolutionary **intelligent command discovery** that transforms AI assistance from "trial and error" to proactive, categorized command suggestions. Perfect for AI assistants that need safe command execution capabilities.
 
 ## Features
+
+🧠 **Intelligent Command Discovery**
+- Revolutionary `list_available_commands` tool for proactive assistance
+- Command categorization by type (package management, version control, file operations, etc.)
+- Comprehensive command descriptions and real-time configuration reporting
+- Transform from "trial and error" to intelligent command workflows
 
 🔒 **Security First**
 - Command whitelisting with configurable allowed commands
@@ -101,6 +107,23 @@ For Claude Desktop, edit your configuration file:
 
 ## Usage Examples
 
+### Intelligent Command Discovery (NEW!)
+
+Claude can now proactively discover and suggest commands without guessing:
+
+```
+"What commands are available in this project?"
+"Show me the available package management commands"
+"List all development tools I can use here"
+"What are my options for version control operations?"
+```
+
+The `list_available_commands` tool provides:
+- **Command Categories**: Organized by type (package management, version control, file operations, etc.)
+- **Detailed Descriptions**: Explanation of what each command does
+- **Configuration Info**: Current working directory, resource limits, and timeouts
+- **Usage Statistics**: Command counts and category summaries
+
 ### Basic Command Execution
 
 Once configured, you can ask your AI assistant to run commands:
@@ -154,7 +177,52 @@ All commands are executed within the configured `ALLOWED_PATH` directory, preven
 
 ## API Reference
 
-### Available Tool
+### Available Tools
+
+#### `list_available_commands` (NEW!)
+
+Discover available commands with intelligent categorization and descriptions.
+
+**Parameters:**
+- None required
+
+**Response:**
+- **Working Directory**: Current `ALLOWED_PATH` configuration
+- **Command Categories**: Commands organized by type (package management, version control, file operations, etc.)
+- **Command Descriptions**: Detailed explanation of each command's purpose
+- **Configuration**: Resource limits, timeouts, and system settings
+- **Statistics**: Command counts and category summaries
+
+**Example:**
+```json
+{
+  "name": "list_available_commands",
+  "arguments": {}
+}
+```
+
+**Sample Response:**
+```json
+{
+  "workingDirectory": "/path/to/project",
+  "totalCommands": 6,
+  "categories": {
+    "packageManagement": ["npm"],
+    "versionControl": ["git"],
+    "fileOperations": ["ls", "cat", "pwd"],
+    "runtime": ["node"]
+  },
+  "commandDescriptions": {
+    "npm": "Node.js package manager - install, update, and manage dependencies",
+    "git": "Version control system - track changes and collaborate on code"
+  },
+  "configuration": {
+    "maxCommandLength": 1000,
+    "commandTimeout": "30000ms",
+    "maxConcurrentCommands": 3
+  }
+}
+```
 
 #### `run_command`
 
@@ -237,10 +305,21 @@ yarn dev
 **Error: "Command not in allowed list"**
 - Add the command to `ALLOWED_COMMANDS` environment variable
 - Ensure proper comma separation in the list
+- Use `list_available_commands` tool to see what's available (v1.1.0+)
 
 **JSON parsing errors in MCP client**
 - Ensure no `console.log()` usage (outputs to stdout)
 - All logging goes to stderr via the `log()` function
+
+### New Features (v1.1.0+)
+
+**Command Discovery**: Use the `list_available_commands` tool to:
+- See all available commands organized by category
+- Get detailed descriptions of what each command does
+- View current configuration and resource limits
+- Understand the working directory and security settings
+
+This eliminates guesswork and enables Claude to provide more intelligent assistance.
 
 ## Contributing
 
