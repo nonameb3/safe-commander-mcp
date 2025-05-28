@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-01-17
+
+### Documentation
+- Updated README.md with comprehensive `list_available_commands` feature documentation
+- Enhanced usage examples and API reference for intelligent command discovery
+- Added troubleshooting information and version-specific feature notes
+- Improved main description to highlight revolutionary command discovery capabilities
+
 ## [1.1.1] - 2025-01-17
 
 ### Fixed
