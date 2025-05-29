@@ -33,77 +33,138 @@ A secure MCP (Model Context Protocol) server for executing whitelisted developme
 - Environment-based configuration
 - Production-ready logging to stderr (MCP-compliant)
 
-## Installation
+## Quick Start (No Installation Required!)
 
-### Via npm (Recommended)
+**🚀 You can use Safe Commander MCP without installing it globally on your machine!**
 
-```bash
-npm install -g safe-commander-mcp
-```
-
-### Via yarn
-
-```bash
-yarn global add safe-commander-mcp
-```
-
-### From source
-
-```bash
-git clone https://github.com/nonameb3/safe-commander-mcp.git
-cd safe-commander-mcp
-yarn install
-yarn build
-```
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `ALLOWED_PATH` | ✅ Yes | - | Base directory where commands can be executed |
-| `ALLOWED_COMMANDS` | No | `npm,git,ls,cat,pwd,node` | Comma-separated list of allowed commands |
-
-### MCP Client Configuration
-
-Add this to your MCP client configuration (e.g., Claude Desktop):
-
-```json
-{
-  "mcpServers": {
-    "safe-commander": {
-      "command": "safe-commander-mcp",
-      "env": {
-        "ALLOWED_PATH": "/path/to/your/project",
-        "ALLOWED_COMMANDS": "npm,git,ls,cat,pwd,node,python"
-      }
-    }
-  }
-}
-```
-
-#### Claude Desktop Configuration
-
-For Claude Desktop, edit your configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+Just add this configuration to your MCP client and you're ready to go:
 
 ```json
 {
   "mcpServers": {
     "safe-commander": {
       "command": "npx",
-      "args": ["safe-commander-mcp"],
+      "args": ["-y", "safe-commander-mcp"],
       "env": {
-        "ALLOWED_PATH": "/Users/yourname/projects/my-project",
-        "ALLOWED_COMMANDS": "npm,yarn,git,ls,cat,pwd,node"
+        "ALLOWED_PATH": "/path/to/your/project",
+        "ALLOWED_COMMANDS": "npm,git,ls,cat,pwd,node"
       }
     }
   }
 }
 ```
+
+That's it! The `npx -y` command will automatically download and run the latest version when needed.
+
+## Configuration
+
+### Required Environment Variables
+
+| Variable | Required | Example | Description |
+|----------|----------|---------|-------------|
+| `ALLOWED_PATH` | ✅ **Yes** | `/Users/yourname/projects/my-app` | Directory where commands can be executed (use absolute path) |
+| `ALLOWED_COMMANDS` | No | `npm,git,ls,cat,pwd,node,python` | Comma-separated list of allowed commands |
+
+### Claude Desktop Setup
+
+**Step 1:** Open your Claude Desktop config file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+
+**Step 2:** Add the Safe Commander MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "safe-commander": {
+      "command": "npx",
+      "args": ["-y", "safe-commander-mcp"],
+      "env": {
+        "ALLOWED_PATH": "/Users/yourname/projects/my-project",
+        "ALLOWED_COMMANDS": "npm,yarn,git,ls,cat,pwd,node,python,pip"
+      }
+    }
+  }
+}
+```
+
+**Step 3:** Replace `/Users/yourname/projects/my-project` with your actual project path.
+
+**Step 4:** Restart Claude Desktop.
+
+**Step 5:** Test by asking: *"What commands are available?"*
+
+### Other MCP Clients
+
+For other MCP clients, use the same configuration format. The key points:
+- **Command**: `npx`
+- **Args**: `["-y", "safe-commander-mcp"]`
+- **Environment**: Set `ALLOWED_PATH` and optionally `ALLOWED_COMMANDS`
+
+## Real-World Examples
+
+### For Web Development
+```json
+"ALLOWED_PATH": "/Users/yourname/projects/my-web-app"
+"ALLOWED_COMMANDS": "npm,yarn,git,ls,cat,pwd,node,npx"
+```
+
+### For Python Development
+```json
+"ALLOWED_PATH": "/Users/yourname/projects/my-python-app"
+"ALLOWED_COMMANDS": "python,pip,git,ls,cat,pwd,python3,poetry"
+```
+
+**⚠️ Security Note**: `ALLOWED_COMMANDS` can be customized to include any commands you need, but **carefully review each command** before adding it. More powerful commands enable more capable LLM assistance, but also introduce greater security risks. Always follow the principle of least privilege - only allow commands that are actually needed for your project.
+
+### For Full-Stack Development
+```json
+"ALLOWED_PATH": "/Users/yourname/projects"
+"ALLOWED_COMMANDS": "npm,yarn,python,pip,git,ls,cat,pwd,node,docker,make,curl"
+```
+
+**🔒 Security Reminder**: This example includes powerful commands like `docker`, `make`, and `curl`. Only include commands you actually need and understand. Each additional command expands the potential attack surface.
+
+Use these environment variable values in the main MCP configuration shown in the [Claude Desktop Setup](#claude-desktop-setup) section above.
+
+## Alternative Installation Methods
+
+### If You Prefer Global Installation
+
+If you want to install globally first (optional):
+
+```bash
+npm install -g safe-commander-mcp
+```
+
+Then use `"command": "safe-commander-mcp"` instead of the npx approach in your MCP configuration.
+
+### For Development/Contributing
+
+If you want to contribute to Safe Commander MCP or develop new features:
+
+```bash
+# Clone the repository
+git clone https://github.com/nonameb3/safe-commander-mcp.git
+cd safe-commander-mcp
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Run in development mode (with file watching)
+npm run dev
+
+# Run tests
+npm test
+
+# Check TypeScript types
+npm run lint
+```
+
+This setup allows you to modify the source code and test changes locally before contributing back to the project.
 
 ## Usage Examples
 
@@ -147,7 +208,7 @@ The following commands are safe by default:
 
 ### Custom Command Configuration
 
-You can customize allowed commands for your specific needs:
+You can customize allowed commands for your specific needs, but always review each command carefully:
 
 ```json
 {
@@ -157,6 +218,18 @@ You can customize allowed commands for your specific needs:
   }
 }
 ```
+
+**🛡️ Security Guidelines for Command Selection:**
+- **Start minimal**: Begin with only the commands you know you need
+- **Add incrementally**: Add new commands only when required for specific tasks
+- **Review regularly**: Periodically audit your command list and remove unused commands
+- **Understand risks**: Research what each command can do before adding it
+- **Principle of least privilege**: More powerful LLMs with more commands = greater capabilities but also greater risks
+
+**Common command categories and their risk levels:**
+- **Low risk**: `ls`, `cat`, `pwd`, `echo` - Read-only file operations
+- **Medium risk**: `npm`, `git`, `node` - Development tools with limited system access
+- **High risk**: `curl`, `wget`, `docker`, `sudo` - Network access or system-level operations
 
 ## Security Features
 
