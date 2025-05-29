@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2025-01-17
+
+### 🔒 MAJOR SECURITY OVERHAUL - BREAKING CHANGE
+- **Security-First Transformation**: Changed default configuration from functionality-first to security-first approach
+- **Safe Defaults**: Default allowed commands changed from `['npm', 'git', 'ls', 'cat', 'pwd', 'node']` to `['ls', 'cat', 'pwd', 'echo']` (read-only only)
+- **Critical Vulnerability Documentation**: Added comprehensive warnings about commands that can bypass security protections
+
+### ⚠️ Security Enhancements
+- **Command Bypass Vulnerability Disclosure**: Documented critical risk of `node`, `python`, `bash`, `sh` commands that can bypass all protections
+- **Enhanced Security Warnings**: Added runtime detection and warnings for dangerous commands
+- **LLM Risk Focus**: Emphasized that "LLM is the primary threat" in all documentation
+- **Data Protection Priority**: Focused security messaging on protecting codebase and sensitive data from unauthorized access
+
+### 📚 Documentation Overhaul
+- **Security-First README**: Complete rewrite prioritizing security over functionality
+- **Risk Level Classifications**: 
+  - Minimal risk: `ls`, `cat`, `pwd`, `echo`
+  - Medium risk: `git` (repository history access)
+  - High risk: `npm`, `pip` (package managers)
+  - CRITICAL RISK: `node`, `python`, `bash`, `sh` (can bypass all security)
+- **Quick Security Check**: Added guidance questions before adding commands
+- **Comprehensive Command Risk Explanations**: Detailed risk analysis for each command type
+- **Consistent Security Messaging**: All examples now include proper security warnings
+
+### 🛡️ Code Security Improvements
+- **Secure Default Configuration**: All basic examples use safe read-only commands by default
+- **Enhanced Security Logging**: Improved security-focused log messages
+- **Runtime Security Warnings**: Added detection and warnings for dangerous command configurations
+
+### Migration Notes
+- **BREAKING**: Default commands changed - existing users should review their configurations
+- **Action Required**: Users with previous configurations should explicitly set `ALLOWED_COMMANDS` to maintain previous functionality
+- **Security Review**: All users should review their command allowlists against the new risk classifications
+
 ## [1.1.3] - 2025-01-17
 
 ### Documentation

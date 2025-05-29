@@ -37,6 +37,8 @@ A secure MCP (Model Context Protocol) server for executing whitelisted developme
 
 **🚀 You can use Safe Commander MCP without installing it globally on your machine!**
 
+**🛡️ Security-First Approach**: By default, only safe read-only commands are allowed to protect your codebase and data from unauthorized access.
+
 Just add this configuration to your MCP client and you're ready to go:
 
 ```json
@@ -47,12 +49,18 @@ Just add this configuration to your MCP client and you're ready to go:
       "args": ["-y", "safe-commander-mcp"],
       "env": {
         "ALLOWED_PATH": "/path/to/your/project",
-        "ALLOWED_COMMANDS": "npm,git,ls,cat,pwd,node"
+        "ALLOWED_COMMANDS": "ls,cat,pwd,echo"
       }
     }
   }
 }
 ```
+
+**⚠️ CRITICAL SECURITY WARNING**:
+- **The primary risk is the LLM itself** - it may attempt to access sensitive files or execute dangerous commands
+- **Your codebase and data protection** is the main security concern - commands can read private files, source code, environment variables, etc.
+- **Only add commands you fully understand** - each additional command expands what the LLM can access
+- **You are responsible** for understanding the implications of every command you allow
 
 That's it! The `npx -y` command will automatically download and run the latest version when needed.
 
@@ -63,7 +71,7 @@ That's it! The `npx -y` command will automatically download and run the latest v
 | Variable | Required | Example | Description |
 |----------|----------|---------|-------------|
 | `ALLOWED_PATH` | ✅ **Yes** | `/Users/yourname/projects/my-app` | Directory where commands can be executed (use absolute path) |
-| `ALLOWED_COMMANDS` | No | `npm,git,ls,cat,pwd,node,python` | Comma-separated list of allowed commands |
+| `ALLOWED_COMMANDS` | No | `ls,cat,pwd,echo` | Comma-separated list of allowed commands |
 
 ### Claude Desktop Setup
 
@@ -81,7 +89,7 @@ That's it! The `npx -y` command will automatically download and run the latest v
       "args": ["-y", "safe-commander-mcp"],
       "env": {
         "ALLOWED_PATH": "/Users/yourname/projects/my-project",
-        "ALLOWED_COMMANDS": "npm,yarn,git,ls,cat,pwd,node,python,pip"
+        "ALLOWED_COMMANDS": "ls,cat,pwd,echo"
       }
     }
   }
@@ -94,6 +102,8 @@ That's it! The `npx -y` command will automatically download and run the latest v
 
 **Step 5:** Test by asking: *"What commands are available?"*
 
+**🔒 Important**: The default commands (`ls,cat,pwd,echo`) are read-only and safe. To add more powerful commands like `npm`, `git`, or `python`, carefully consider the security implications - they may allow the LLM to read sensitive data, modify files, or execute arbitrary code.
+
 ### Other MCP Clients
 
 For other MCP clients, use the same configuration format. The key points:
@@ -103,27 +113,32 @@ For other MCP clients, use the same configuration format. The key points:
 
 ## Real-World Examples
 
+**⚠️ Security First**: All examples below add commands beyond the safe defaults. Each additional command increases LLM capabilities but also increases the risk of data exposure or unauthorized actions.
+
 ### For Web Development
 ```json
 "ALLOWED_PATH": "/Users/yourname/projects/my-web-app"
-"ALLOWED_COMMANDS": "npm,yarn,git,ls,cat,pwd,node,npx"
+"ALLOWED_COMMANDS": "ls,cat,pwd,echo,npm,git"
 ```
+**Risk**: `npm` can install packages and run scripts. `git` can access repository history including commit messages, author information, file changes, and branch data.
 
 ### For Python Development
 ```json
 "ALLOWED_PATH": "/Users/yourname/projects/my-python-app"
-"ALLOWED_COMMANDS": "python,pip,git,ls,cat,pwd,python3,poetry"
+"ALLOWED_COMMANDS": "ls,cat,pwd,echo,python,pip,git"
 ```
+**Risk**: `python` can execute arbitrary code and access any file. `pip` can install packages.
 
-**⚠️ Security Note**: `ALLOWED_COMMANDS` can be customized to include any commands you need, but **carefully review each command** before adding it. More powerful commands enable more capable LLM assistance, but also introduce greater security risks. Always follow the principle of least privilege - only allow commands that are actually needed for your project.
+**⚠️ Security Note**: `ALLOWED_COMMANDS` can be customized to include any commands you need, but **carefully review each command** before adding it. More powerful commands enable more capable LLM assistance, but also introduce greater security risks. **The LLM is the primary threat** - it may attempt to read sensitive files, access credentials, or execute unauthorized operations.
 
 ### For Full-Stack Development
 ```json
 "ALLOWED_PATH": "/Users/yourname/projects"
-"ALLOWED_COMMANDS": "npm,yarn,python,pip,git,ls,cat,pwd,node,docker,make,curl"
+"ALLOWED_COMMANDS": "ls,cat,pwd,echo,npm,git,python,docker"
 ```
+**Risk**: This configuration allows significant system access. `docker` can access containers and potentially the entire system.
 
-**🔒 Security Reminder**: This example includes powerful commands like `docker`, `make`, and `curl`. Only include commands you actually need and understand. Each additional command expands the potential attack surface.
+**🔒 Security Reminder**: This example includes powerful commands that can access sensitive data, modify your system, or execute arbitrary code. Only use if you fully trust the LLM and understand the implications.
 
 Use these environment variable values in the main MCP configuration shown in the [Claude Desktop Setup](#claude-desktop-setup) section above.
 
@@ -198,13 +213,24 @@ Once configured, you can ask your AI assistant to run commands:
 
 ### Safe Commands
 
-The following commands are safe by default:
-- `npm` - Package management and script execution
-- `git` - Version control operations
-- `ls` - Directory listing
-- `cat` - File content reading
-- `pwd` - Current directory
-- `node` - Node.js script execution
+The following commands are included by default for security:
+- `ls` - Directory listing (read-only)
+- `cat` - File content reading (read-only) 
+- `pwd` - Current directory (read-only)
+- `echo` - Display text (safe output)
+
+**Additional commands you might add (understand the risks first):**
+- `git` - Version control operations (can access repository history including commit messages, author information, file changes, and branch data)
+- `npm` - Package management (can install packages and run scripts)
+- `python` - Script execution (can execute arbitrary code and access any file)
+- `node` - JavaScript execution (can bypass all security protections)
+
+**🚨 LLM Risk Warning**: Remember that the LLM itself is the primary security concern. Even with "safe" commands, an LLM could potentially:
+- Use `cat` to read sensitive files like `.env`, `config.json`, private keys
+- Use `ls` to discover the structure of your private codebase
+- Combine multiple commands to extract sensitive information
+
+Always ensure your `ALLOWED_PATH` points to a directory that doesn't contain sensitive data you wouldn't want the LLM to access.
 
 ### Custom Command Configuration
 
@@ -214,30 +240,59 @@ You can customize allowed commands for your specific needs, but always review ea
 {
   "env": {
     "ALLOWED_PATH": "/path/to/project",
-    "ALLOWED_COMMANDS": "npm,yarn,pnpm,git,ls,cat,pwd,node,python,pip,poetry"
+    "ALLOWED_COMMANDS": "ls,cat,pwd,echo,npm,git"
   }
 }
 ```
 
 **🛡️ Security Guidelines for Command Selection:**
-- **Start minimal**: Begin with only the commands you know you need
+- **Start with defaults**: Begin with the secure defaults (`ls,cat,pwd,echo`)
 - **Add incrementally**: Add new commands only when required for specific tasks
+- **Understand LLM risks**: The LLM is the primary threat - it may try to access sensitive data
 - **Review regularly**: Periodically audit your command list and remove unused commands
-- **Understand risks**: Research what each command can do before adding it
-- **Principle of least privilege**: More powerful LLMs with more commands = greater capabilities but also greater risks
+- **Principle of least privilege**: Only grant the minimum access needed
+- **Data protection focus**: Consider what sensitive data the LLM could access with each command
 
 **Common command categories and their risk levels:**
-- **Low risk**: `ls`, `cat`, `pwd`, `echo` - Read-only file operations
-- **Medium risk**: `npm`, `git`, `node` - Development tools with limited system access
-- **High risk**: `curl`, `wget`, `docker`, `sudo` - Network access or system-level operations
+- **Minimal risk**: `ls`, `cat`, `pwd`, `echo` - Read-only file operations (but can still expose sensitive file contents)
+- **Medium risk**: `git` - Version control with access to repository history including commit messages, author information, file changes, and branch data
+- **High risk**: `npm`, `pip` - Package managers that can install software and run scripts
+- **CRITICAL RISK**: `node`, `python`, `bash`, `sh` - **CAN BYPASS ALL SECURITY** and execute arbitrary system commands
 
 ## Security Features
+
+### 🎯 **Primary Security Goal: Protect Your Data from LLMs and Third Parties**
+
+Safe Commander MCP is designed to prevent unauthorized access to your sensitive codebase, files, and data. **The main threat is the LLM itself** - it may attempt to:
+- Read sensitive files (credentials, private keys, source code)
+- Access confidential business data
+- Execute unauthorized operations
+- Exfiltrate data to third parties
+
+### ⚠️ Critical Security Considerations
+
+**IMPORTANT: Command Execution Bypass Vulnerabilities**
+
+Some commands can bypass the whitelist protection by executing other commands internally:
+
+- **`node`**: Can execute ANY system command via `child_process` module
+  ```bash
+  # This bypasses all protections:
+  node -e 'require("child_process").execSync("rm -rf /important/data")'
+  ```
+- **`python`**: Can execute system commands via `os.system()` or `subprocess`
+- **`bash`/`sh`**: Direct shell access bypasses all protections
+- **`npm`**: Can run scripts that execute arbitrary commands
+
+**Recommendation**: Only include `node` or `python` if you fully trust the LLM and understand the risks. For maximum security, use only read-only commands like `ls`, `cat`, `pwd`.
 
 ### Command Validation
 - **Whitelist-only**: Only pre-approved commands can be executed
 - **Character sanitization**: Dangerous characters (`; & | \` $ ( ) { } [ ] < >`) are blocked
 - **Path validation**: Prevents directory traversal attacks
 - **Length limits**: Commands are limited to 1000 characters
+
+**Note**: Character sanitization provides limited protection against commands that have built-in execution capabilities like `node` or `python`.
 
 ### Resource Limits
 - **Execution timeout**: 30 seconds maximum per command
@@ -247,6 +302,16 @@ You can customize allowed commands for your specific needs, but always review ea
 
 ### Directory Restrictions
 All commands are executed within the configured `ALLOWED_PATH` directory, preventing access to sensitive system areas.
+
+## 🔍 Quick Security Check
+
+Before adding any command to your whitelist, ask yourself:
+- Can this command read files I don't want the LLM to see?
+- Can this command execute other commands or scripts? 
+- What's the worst thing that could happen if the LLM runs this command?
+- Do I trust the LLM with this level of access to my system?
+
+**Remember**: The LLM is curious and will explore. Only grant access to what you're comfortable with it discovering.
 
 ## API Reference
 
