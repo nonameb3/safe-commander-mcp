@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-01-17
+
+### Documentation
+- **Simplified Setup Process**: Completely rewritten installation and configuration sections
+- **No Installation Required**: Emphasized npx approach - users can start immediately without global installation
+- **Reduced Repetition**: Consolidated multiple MCP configuration examples into one main config with variable examples
+- **Enhanced Security Guidance**: Added comprehensive command selection guidelines with risk levels
+- **Better Real-World Examples**: Clearer examples for Web Development, Python Development, and Full-Stack Development
+- **Improved Development Setup**: Enhanced contributing section with step-by-step development instructions
+
+### User Experience
+- **Easier Onboarding**: Users can copy-paste configuration and start using immediately
+- **Clear Security Warnings**: Better guidance on command selection and security implications
+- **Streamlined Documentation**: Removed redundant configuration examples while maintaining all essential information
+
 ## [1.1.2] - 2025-01-17
 
 ### Documentation
